@@ -1,6 +1,11 @@
-from base import am, bm, sm
+from ev3dev2.motor import OUTPUT_A, OUTPUT_C, OUTPUT_B
+from motors import FlipMotor, BaseMotor, SensorMotor
 from time import sleep
 
+
+bm = FlipMotor(OUTPUT_B)
+am = BaseMotor(OUTPUT_A)
+sm = SensorMotor(OUTPUT_C)
 
 #Rotação do motor do sensor
 sm.move_back(100)

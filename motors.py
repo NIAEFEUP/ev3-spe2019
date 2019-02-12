@@ -1,10 +1,13 @@
-from ev3dev2.motor import LargeMotor, OUTPUT_A, MediumMotor, OUTPUT_C, OUTPUT_B
+from ev3dev2.motor import LargeMotor, MediumMotor
 from time import sleep
 
 class BasicMotor:
 	def __init__(self, output):
 		self.motor = LargeMotor(output)
 		self.reset()
+
+	def __del__(self):
+		self.motor.stop()
 
 	def reset(self):
 		self.motor.reset()
@@ -35,10 +38,10 @@ class BaseMotor(BasicMotor):
 class FlipMotor(BasicMotor):
 	def __init__(self, output):
 		BasicMotor.__init__(self,output)
-		self.state = 1
+		self.locked = False
 	
 	def flip(self):
-		if self.state != 1:
+		if self.locked:
 			return
 			
 		self.motor.on_for_degrees(40,180)
@@ -49,29 +52,35 @@ class FlipMotor(BasicMotor):
 		sleep(0.5)
 
 	def lock(self):
-		if self.state != 1:
+		if self.locked:
 			return
 		self.motor.on_for_degrees(40,90)
 		sleep(0.5)
-		self.state = 2
+		self.locked = True
 
 	def release(self):
-		if self.state == 1:
+		if not self.locked:
 			return
 		self.motor.on_for_degrees(-40,90)
 		sleep(0.5)
-		self.state = 1
+		self.locked = False
 
-
-class SensorMotor:
+class BasicMediumMotor:
 	def __init__(self, output):
-		self.motor = MediumMotor(output)
+		self.motor = LargeMotor(output)
 		self.reset()
+
+	def __del__(self):
+		self.motor.stop()
 
 	def reset(self):
 		self.motor.reset()
 		self.motor.on_for_degrees(0,0,brake=False)
 		self.motor.stop()
+
+class SensorMotor(BasicMediumMotor):
+	def __init__(self, output):
+		BasicMediumMotor.__init__(self, output)
 
 	def move(self, degrees):
 		self.motor.on_for_degrees(-100,degrees)
@@ -80,7 +89,3 @@ class SensorMotor:
 	def move_back(self, degrees):
 		self.motor.on_for_degrees(100,degrees)
 		sleep(0.5)
-
-bm = FlipMotor(OUTPUT_B)
-am = BaseMotor(OUTPUT_A)
-sm = SensorMotor(OUTPUT_C)
