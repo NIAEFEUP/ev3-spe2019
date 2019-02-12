@@ -10,8 +10,22 @@ class CubeSolver:
         output = subprocess.check_output(['./solver', cubeString], stderr=None)
         strOutput = "".join( chr(x) for x in output)
         return CubeSolver.solutionParser.search(strOutput).group()
+    
+    @staticmethod
+    def translateColors(colorString):
+        dic = {}
+        dic[colorString[4]] = 'U'
+        dic[colorString[13]] = 'R'
+        dic[colorString[22]] = 'F'
+        dic[colorString[31]] = 'D'
+        dic[colorString[40]] = 'L'
+        dic[colorString[49]] = 'B'
+        cubeString = ""
+        for c in colorString:
+            cubeString += dic[c]
+        return cubeString
 
-
-
-sol = CubeSolver.solveCube('DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD')
+colorString = 'YWBGBWOBWORRWYGRYGYRBBROYOWGYGGGRRBWOOBOWWBYRYGGROBOYW'
+cubeString = CubeSolver.translateColors(colorString)
+sol = CubeSolver.solveCube(cubeString)
 print(sol)
