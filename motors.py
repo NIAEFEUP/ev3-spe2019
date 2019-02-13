@@ -2,8 +2,8 @@ from ev3dev2.motor import LargeMotor, MediumMotor
 from time import sleep
 
 class BasicMotor:
-	def __init__(self, output):
-		self.motor = LargeMotor(output)
+	def __init__(self, motorModel, output):
+		self.motor = motorModel(output)
 		self.reset()
 
 	def __del__(self):
@@ -12,12 +12,17 @@ class BasicMotor:
 	def reset(self):
 		self.motor.reset()
 		self.motor.on_for_degrees(0,0,brake=False)
-		self.motor.stop()
 
 
 class BaseMotor(BasicMotor):
 	def __init__(self, output):
-		BasicMotor.__init__(self,output)
+		BasicMotor.__init__(self, LargeMotor, output)
+		self.halfTurn = False
+
+	def __del__(self):
+		if self.halfTurn:
+			self.rotate45()
+		BasicMotor.__del__(self)
 
 	def rotate180(self):
 		self.motor.on_for_degrees(100,270 * 2)
@@ -28,6 +33,7 @@ class BaseMotor(BasicMotor):
 		sleep(0.5)
 
 	def rotate45(self):
+		self.halfTurn = not self.halfTurn
 		self.motor.on_for_degrees(100,135)
 		sleep(0.5)
 
@@ -40,14 +46,20 @@ class BaseMotor(BasicMotor):
 		sleep(0.5)
 
 	def rotate45R(self):
+		self.halfTurn = not self.halfTurn
 		self.motor.on_for_degrees(-100,135)
 		sleep(0.5)
 
 class FlipMotor(BasicMotor):
 	def __init__(self, output):
-		BasicMotor.__init__(self,output)
+		BasicMotor.__init__(self, LargeMotor, output)
 		self.locked = False
 	
+	def __del__(self):
+		if self.locked:
+			self.release()
+		BasicMotor.__del__(self)
+
 	def flip(self):
 		if self.locked:
 			return
@@ -73,22 +85,10 @@ class FlipMotor(BasicMotor):
 		sleep(0.5)
 		self.locked = False
 
-class BasicMediumMotor:
+
+class SensorMotor(BasicMotor):
 	def __init__(self, output):
-		self.motor = MediumMotor(output)
-		self.reset()
-
-	def __del__(self):
-		self.motor.stop()
-
-	def reset(self):
-		self.motor.reset()
-		self.motor.on_for_degrees(0,0,brake=False)
-		self.motor.stop()
-
-class SensorMotor(BasicMediumMotor):
-	def __init__(self, output):
-		BasicMediumMotor.__init__(self, output)
+		BasicMotor.__init__(self, MediumMotor, output)
 		self.position = 0
 		self.sidePosition = 450
 		self.cornerPosition = 410
@@ -96,7 +96,7 @@ class SensorMotor(BasicMediumMotor):
 
 	def __del__(self):
 		self.resetPosition()
-		self.motor.stop()
+		BasicMotor.__del__(self)
 
 	def resetPosition(self):
 		self.move_back(self.position)
