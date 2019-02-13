@@ -54,6 +54,7 @@ class FlipMotor(BasicMotor):
 	def __init__(self, output):
 		BasicMotor.__init__(self, LargeMotor, output)
 		self.locked = False
+		self.speed = 50
 	
 	def __del__(self):
 		if self.locked:
@@ -64,24 +65,24 @@ class FlipMotor(BasicMotor):
 		if self.locked:
 			return
 			
-		self.motor.on_for_degrees(40,180)
+		self.motor.on_for_degrees(self.speed,180)
 		sleep(0.5)
-		self.motor.on_for_degrees(-40,90)
+		self.motor.on_for_degrees(-self.speed,90)
 		sleep(0.5)
-		self.motor.on_for_degrees(-40,90)
+		self.motor.on_for_degrees(-self.speed,90)
 		sleep(0.5)
 
 	def lock(self):
 		if self.locked:
 			return
-		self.motor.on_for_degrees(40,90)
+		self.motor.on_for_degrees(self.speed,90)
 		sleep(0.5)
 		self.locked = True
 
 	def release(self):
 		if not self.locked:
 			return
-		self.motor.on_for_degrees(-40,90)
+		self.motor.on_for_degrees(-self.speed,90)
 		sleep(0.5)
 		self.locked = False
 
@@ -90,9 +91,9 @@ class SensorMotor(BasicMotor):
 	def __init__(self, output):
 		BasicMotor.__init__(self, MediumMotor, output)
 		self.position = 0
-		self.sidePosition = 450
-		self.cornerPosition = 410
-		self.centerPosition = 540
+		self.sidePosition = 500
+		self.cornerPosition = 460
+		self.centerPosition = 600
 
 	def __del__(self):
 		self.resetPosition()
@@ -114,12 +115,12 @@ class SensorMotor(BasicMotor):
 		if degrees == 0:
 			return
 		self.position += degrees
-		self.motor.on_for_degrees(-100,degrees)
+		self.motor.on_for_degrees(100,degrees)
 		sleep(0.5)
 
 	def move_back(self, degrees):
 		if degrees == 0:
 			return
 		self.position -= degrees
-		self.motor.on_for_degrees(100,degrees)
+		self.motor.on_for_degrees(-100,degrees)
 		sleep(0.5)

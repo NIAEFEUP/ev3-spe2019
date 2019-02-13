@@ -34,3 +34,7 @@ class CubeMover:
             self.flipper.lock()
             self.base.rotate180R()
             self.flipper.release()
+        elif move == 'H':
+            self.base.rotate45()
+        elif move == 'h':
+            self.base.rotate45R()
