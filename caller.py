@@ -1,7 +1,6 @@
 import subprocess
 import re
 
-
 class CubeSolver:    
     solutionParser = re.compile(r"[A-Z][\w ']+$")
 
