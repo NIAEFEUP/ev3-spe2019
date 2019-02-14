@@ -2,9 +2,10 @@ from ev3dev2.motor import LargeMotor, MediumMotor
 from time import sleep
 
 class BasicMotor:
-	def __init__(self, motorModel, output):
+	def __init__(self, motorModel, output, sleepTime=0.25):
 		self.motor = motorModel(output)
 		self.reset()
+		self.sleepTime=sleepTime
 
 	def __del__(self):
 		self.motor.stop()
@@ -26,29 +27,29 @@ class BaseMotor(BasicMotor):
 
 	def rotate180(self):
 		self.motor.on_for_degrees(100,270 * 2)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def rotate90(self):
 		self.motor.on_for_degrees(100,270)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def rotate45(self):
 		self.halfTurn = not self.halfTurn
 		self.motor.on_for_degrees(100,135)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def rotate180R(self):
 		self.motor.on_for_degrees(-100,270 * 2)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def rotate90R(self):
 		self.motor.on_for_degrees(-100,270)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def rotate45R(self):
 		self.halfTurn = not self.halfTurn
 		self.motor.on_for_degrees(-100,135)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 class FlipMotor(BasicMotor):
 	def __init__(self, output):
@@ -66,24 +67,24 @@ class FlipMotor(BasicMotor):
 			return
 			
 		self.motor.on_for_degrees(self.speed,180)
-		sleep(0.5)
+		sleep(self.sleepTime)
 		self.motor.on_for_degrees(-self.speed,90)
-		sleep(0.5)
+		sleep(self.sleepTime)
 		self.motor.on_for_degrees(-self.speed,90)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def lock(self):
 		if self.locked:
 			return
 		self.motor.on_for_degrees(self.speed,90)
-		sleep(0.5)
+		sleep(self.sleepTime)
 		self.locked = True
 
 	def release(self):
 		if not self.locked:
 			return
 		self.motor.on_for_degrees(-self.speed,90)
-		sleep(0.5)
+		sleep(self.sleepTime)
 		self.locked = False
 
 
@@ -91,8 +92,8 @@ class SensorMotor(BasicMotor):
 	def __init__(self, output):
 		BasicMotor.__init__(self, MediumMotor, output)
 		self.position = 0
-		self.sidePosition = 500
-		self.cornerPosition = 460
+		self.sidePosition = 480
+		self.cornerPosition = 440
 		self.centerPosition = 600
 
 	def __del__(self):
@@ -116,11 +117,11 @@ class SensorMotor(BasicMotor):
 			return
 		self.position += degrees
 		self.motor.on_for_degrees(100,degrees)
-		sleep(0.5)
+		sleep(self.sleepTime)
 
 	def move_back(self, degrees):
 		if degrees == 0:
 			return
 		self.position -= degrees
 		self.motor.on_for_degrees(-100,degrees)
-		sleep(0.5)
+		sleep(self.sleepTime)

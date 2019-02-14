@@ -27,6 +27,9 @@ class Color:
         self.r /= self.numberOfColors
         self.g /= self.numberOfColors
         self.b /= self.numberOfColors
+
+    def getTuple(self):
+        return (self.r, self.g, self.b)
         
 
 
@@ -35,7 +38,6 @@ class ColorReader:
         self.cubeMover = cubeMover
         self.colorSensor = ColorSensor(INPUT_1)
         self.sensorMotor = SensorMotor(OUTPUT_C)
-        self.colorContainer = {}
         self.averageColors = {
             (201,174,51): 'O',
             (210,255,166): 'W',
@@ -76,20 +78,20 @@ class ColorReader:
         self.cubeMover.move(['F'])
         faces['D'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
         self.cubeMover.move(['F'])
-        faces['F'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2])
+        faces['F'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2]) # Wrong
         self.cubeMover.move(['F'])
         faces['U'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
         self.cubeMover.move(['F', 'R', 'F'])
-        faces['L'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2])
+        faces['L'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2]) # Wrong
         self.cubeMover.move(['F', 'F'])
-        faces['R'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['r'])
+        faces['R'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6]) # Wrong
+        self.cubeMover.move(['R', 'F', 'r'])
 
         return faces
 
     def getCubeString(self):
         cubeString = ""
-        faces = readCube()
+        faces = self.readCube()
         for face in ['U', 'R', 'F', 'D', 'L', 'B']:
             cubeString += faces[face]
         return cubeString

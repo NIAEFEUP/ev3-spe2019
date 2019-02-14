@@ -7,7 +7,7 @@ class CubeSolver:
 
     @staticmethod
     def solveCube(cubeString):
-        output = subprocess.check_output(['./solver', cubeString], stderr=None)
+        output = subprocess.check_output(['./solver', cubeString], shell=True)
         strOutput = "".join( chr(x) for x in output)
         return CubeSolver.solutionParser.search(strOutput).group()
     
@@ -24,8 +24,3 @@ class CubeSolver:
         for c in colorString:
             cubeString += dic[c]
         return cubeString
-
-colorString = 'YWBGBWOBWORRWYGRYGYRBBROYOWGYGGGRRBWOOBOWWBYRYGGROBOYW'
-cubeString = CubeSolver.translateColors(colorString)
-sol = CubeSolver.solveCube(cubeString)
-print(sol)
