@@ -116,12 +116,12 @@ class SensorMotor(BasicMotor):
 		if degrees == 0:
 			return
 		self.position += degrees
-		self.motor.on_for_degrees(100,degrees)
+		self.motor.on_for_degrees(50,degrees)
 		sleep(self.sleepTime)
 
 	def move_back(self, degrees):
 		if degrees == 0:
 			return
 		self.position -= degrees
-		self.motor.on_for_degrees(-100,degrees)
+		self.motor.on_for_degrees(-50,degrees)
 		sleep(self.sleepTime)
