@@ -13,4 +13,4 @@ api = Api(app)
 
 
 api.add_resource(Solver, "/<string:cube>")
-app.run(debug=True)
+app.run(host='10.236.232.1')
