@@ -1,8 +1,6 @@
 def translateMoves(solution):
     moves = ''
     for i in range(len(solution)):
-        # print(str(i) + moves)
-        # print(positions)
         if solution[i] == ' ' or solution[i] == '"' or solution[i] == '\'' or solution[i] == '2':
             continue
         else:
@@ -37,8 +35,6 @@ def read_move(moves, letter):
                 return w5(moves)
             if i == 5:
                 return w6(moves)
-    # print(positions)
-    # print(letter)
     return moves
 
 def w1(moves):
@@ -48,35 +44,35 @@ def w2(moves):
     global positions
     aux = [positions[1], positions[2], positions[3], positions[0], positions[4], positions[5]]
     positions = aux.copy()
-    moves += 'F'
+    moves += ''
     return moves
 
 def w3(moves):
     global positions
     aux = [positions[2], positions[3], positions[0], positions[1], positions[4], positions[5]]
     positions = aux.copy()
-    moves += 'FF'
+    moves += 'F'
     return moves
 
 def w4(moves):
     global positions
     aux = [positions[3], positions[2], positions[1], positions[0], positions[5], positions[4]]
     positions = aux.copy()
-    moves += 'SF'
+    moves += 'S'
     return moves
 
 def w5(moves):
     global positions
     aux = [positions[4], positions[2], positions[5], positions[0], positions[3], positions[1]]
     positions = aux.copy()
-    moves += 'rF'
+    moves += 'r'
     return moves
 
 def w6(moves):
     global positions
     aux = [positions[5], positions[2], positions[4], positions[0], positions[1], positions[3]]
     positions = aux.copy()
-    moves += 'RF'
+    moves += 'R'
     return moves
 
 positions = ['D','F','U','B','L','R']
