@@ -7,7 +7,7 @@ class CubeSolver:
     @staticmethod
     def solveCube(cubeString):
         output = subprocess.check_output(['./solver', cubeString])
-        strOutput = "".join( chr(x) for x in output)
+        strOutput = "".join( chr(x) for x in str(output))
         return CubeSolver.solutionParser.search(strOutput).group()
     
     @staticmethod
