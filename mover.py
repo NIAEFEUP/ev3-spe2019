@@ -27,9 +27,7 @@ class CubeMover:
             self.base.rotate90R()
             self.flipper.release()
         elif move == 'S':
-            self.flipper.lock()
             self.base.rotate180()
-            self.flipper.release()
         elif move == 's':
             self.flipper.lock()
             self.base.rotate180R()
