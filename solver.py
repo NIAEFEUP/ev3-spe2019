@@ -3,7 +3,7 @@ from mover import CubeMover
 from time import sleep
 from caller import CubeSolver
 from requests import get
-from server import serverInfo
+from serverInfo import serverInfo
 
 cm = CubeMover()
 cr = ColorReader(cm)

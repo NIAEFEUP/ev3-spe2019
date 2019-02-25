@@ -2,12 +2,7 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from caller import CubeSolver
 from get_solution import translateMoves
-
-
-serverInfo = {
-    'hostName': '10.236.232.1',
-    'port': '5000'
-}
+from serverInfo import serverInfo
 
 class Solver(Resource):
 
