@@ -10,7 +10,6 @@ cr = ColorReader(cm)
 
 
 colorString = cr.getCubeString()
-print(colorString)
 cubeString = CubeSolver.translateColors(colorString)
 print(cubeString)
 sol = get('http://'+ serverInfo['hostName'] + ':' + serverInfo['port'] +'/' + cubeString).text
