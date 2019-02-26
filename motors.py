@@ -55,7 +55,7 @@ class FlipMotor(BasicMotor):
 	def __init__(self, output):
 		BasicMotor.__init__(self, LargeMotor, output)
 		self.locked = False
-		self.speed = 50
+		self.speed = 65
 	
 	def __del__(self):
 		if self.locked:
