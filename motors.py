@@ -64,7 +64,7 @@ class FlipMotor(BasicMotor):
 
 	def flip(self):
 		if self.locked:
-			return
+			self.release()
 			
 		self.motor.on_for_degrees(self.speed,180)
 		sleep(self.sleepTime)
@@ -86,6 +86,16 @@ class FlipMotor(BasicMotor):
 		self.motor.on_for_degrees(-self.speed,90)
 		sleep(self.sleepTime)
 		self.locked = False
+	
+	def lockFlip(self):
+		if self.locked:
+			self.release()
+
+		self.motor.on_for_degrees(self.speed,180)
+		sleep(self.sleepTime)
+		self.motor.on_for_degrees(-self.speed,90)
+		sleep(self.sleepTime)
+		self.locked = True
 
 
 class SensorMotor(BasicMotor):
