@@ -14,4 +14,5 @@ cubeString = CubeSolver.translateColors(colorString)
 print(cubeString)
 sol = get('http://'+ serverInfo['hostName'] + ':' + serverInfo['port'] +'/' + cubeString).text
 print(sol)
+input("Press Enter to continue...")
 cm.move(sol)
