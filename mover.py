@@ -19,19 +19,19 @@ class CubeMover:
         elif move == 'r':
             self.base.rotate90R()
         elif move == 'T':
-            self.flipper.lockFlip()
+            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate90()
             self.flipper.release()
         elif move == 't':
-            self.flipper.lockFlip()
+            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate90R()
             self.flipper.release()
         elif move == 'S':
             self.base.rotate180()
         elif move == 's':
-            self.flipper.lockFlip()
+            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate180R()
             self.flipper.release()
