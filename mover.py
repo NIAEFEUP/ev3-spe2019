@@ -13,29 +13,32 @@ class CubeMover:
 
     def singleMovement(self, move):
         if move == 'F':
-            self.flipper.flip()
+            self.flipper.lockFlip()
         elif move == 'R':
+            self.flipper.release()
             self.base.rotate90()
         elif move == 'r':
+            self.flipper.release()
             self.base.rotate90R()
         elif move == 'T':
-            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate90()
             self.flipper.release()
         elif move == 't':
-            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate90R()
             self.flipper.release()
         elif move == 'S':
             self.base.rotate180()
         elif move == 's':
-            # self.flipper.lockFlip()
             self.flipper.lock()
             self.base.rotate180R()
             self.flipper.release()
         elif move == 'H':
+            self.flipper.release()
             self.base.rotate45()
         elif move == 'h':
+            self.flipper.release()
             self.base.rotate45R()
+        elif move == 'f':
+            self.flipper.flip()

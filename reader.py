@@ -73,19 +73,19 @@ class ColorReader:
     def readCube(self):
         faces = {}
 
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['B'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['D'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['F'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['U'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F', 'R', 'F'])
+        self.cubeMover.move(['f', 'R', 'f'])
         faces['L'] = self.readFace([4, 3, 2, 5, 0, 1, 6, 7, 8]) # Wrong
-        self.cubeMover.move(['F', 'F'])
+        self.cubeMover.move(['f', 'f'])
         faces['R'] = self.readFace([4, 3, 2, 5, 0, 1, 6, 7, 8]) # Wrong
-        self.cubeMover.move(['R', 'F', 'r'])
+        self.cubeMover.move(['R', 'f', 'r'])
 
         return faces
 

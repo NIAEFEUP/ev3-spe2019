@@ -2,24 +2,17 @@ from reader import ColorReader
 from mover import CubeMover
 from time import sleep
 from caller import CubeSolver
+from get_solution import translateMoves
 
 cm = CubeMover()
-cr = ColorReader(cm)
+#cr = ColorReader(cm)
 
-while True:
-	x = input('Move')
-	cm.move([x])
-
-#colorString = cr.getCubeString()
+#colorString = "ORBGRGOYGWWORGWRYOGBRWWYGGYRRBBOOWBGYYYOBBROYWWBOYGWRB"
 #print(colorString)
 #cubeString = CubeSolver.translateColors(colorString)
 #print(cubeString)
-# sol = CubeSolver.solveCube(cubeString)
-# print(sol)
+#cm.move(translateMoves(cubeString))
 
-# F - W
-# U - O
-# R - B
-# L - G
-# B - Y
-# D - R
+while True:
+	x = input('Move')
+	cm.move(translateMoves(x))
