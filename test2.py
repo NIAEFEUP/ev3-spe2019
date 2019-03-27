@@ -5,7 +5,8 @@ from caller import CubeSolver
 from get_solution import translateMoves
 
 cm = CubeMover()
-#cr = ColorReader(cm)
+cr = ColorReader(cm)
+cr.calibrate()
 
 #colorString = "ORBGRGOYGWWORGWRYOGBRWWYGGYRRBBOOWBGYYYOBBROYWWBOYGWRB"
 #print(colorString)
@@ -13,6 +14,6 @@ cm = CubeMover()
 #print(cubeString)
 #cm.move(translateMoves(cubeString))
 
-while True:
-	x = input('Move')
-	cm.move(translateMoves(x))
+# while True:
+# 	x = input('Move')
+# 	cm.move(translateMoves(x))

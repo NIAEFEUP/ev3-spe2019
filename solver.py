@@ -15,14 +15,17 @@ ts = TouchSensor(INPUT_2)
 cm = CubeMover()
 cr = ColorReader(cm)
 
+def getSolution():
+    colorString = cr.getCubeString()
+    cubeString = CubeSolver.translateColors(colorString)
+    print(cubeString)
+    return get('http://'+ serverInfo['hostName'] + ':' + serverInfo['port'] +'/' + cubeString)
+
 while True:
     print('ready')
     sound.beep()
     ts.wait_for_pressed()
-    colorString = cr.getCubeString()
-    cubeString = CubeSolver.translateColors(colorString)
-    print(cubeString)
-    sol = get('http://'+ serverInfo['hostName'] + ':' + serverInfo['port'] +'/' + cubeString)
+    sol = getSolution()
     print(sol)
     if (sol.status_code == 200):
         cm.move(sol.text)
