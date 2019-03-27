@@ -42,7 +42,7 @@ def w1(moves, positions):
 
 def w2(moves, positions):
     aux = [positions[1], positions[2], positions[3], positions[0], positions[4], positions[5]]
-    positions = aux.copy()
+    positions = aux
     moves += 'F'
 
     return moves, positions
@@ -50,7 +50,7 @@ def w2(moves, positions):
 
 def w3(moves, positions):
     aux = [positions[2], positions[3], positions[0], positions[1], positions[4], positions[5]]
-    positions = aux.copy()
+    positions = aux
     moves += 'FF'
 
     return moves, positions
@@ -58,7 +58,7 @@ def w3(moves, positions):
 
 def w4(moves, positions):
     aux = [positions[3], positions[2], positions[1], positions[0], positions[5], positions[4]]
-    positions = aux.copy()
+    positions = aux
     moves += 'SF'
 
     return moves, positions
@@ -66,7 +66,7 @@ def w4(moves, positions):
 
 def w5(moves, positions):
     aux = [positions[4], positions[2], positions[5], positions[0], positions[3], positions[1]]
-    positions = aux.copy()
+    positions = aux
     moves += 'rF'
 
     return moves, positions
@@ -74,7 +74,7 @@ def w5(moves, positions):
 
 def w6(moves, positions):
     aux = [positions[5], positions[2], positions[4], positions[0], positions[1], positions[3]]
-    positions = aux.copy()
+    positions = aux
     moves += 'RF'
 
     return moves, positions
