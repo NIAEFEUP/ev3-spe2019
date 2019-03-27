@@ -3,7 +3,6 @@ from flask_restful import Api, Resource, reqparse
 from caller import CubeSolver
 from get_solution import translateMoves
 from serverInfo import serverInfo
-import pycuber as pc
 
 class Solver(Resource):
 
