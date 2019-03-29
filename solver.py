@@ -23,9 +23,10 @@ def getSolution():
 
 while True:
     print('ready')
-    sound.beep()
+    sound.play('alert.wav')
     ts.wait_for_pressed()
     sol = getSolution()
     print(sol)
     if (sol.status_code == 200):
         cm.move(sol.text)
+        sound.play('khaled.wav')
