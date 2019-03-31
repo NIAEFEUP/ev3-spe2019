@@ -38,14 +38,7 @@ class ColorReader:
         self.cubeMover = cubeMover
         self.colorSensor = ColorSensor(INPUT_1)
         self.sensorMotor = SensorMotor(OUTPUT_C)
-        self.averageColors = {
-            (201,174,51): 'O',
-            (210,255,166): 'W',
-            (142,84,17): 'R',
-            (223,254,51): 'Y',
-            (32,99,75): 'B',
-            (46,189,66): 'G'
-        }
+        self.averageColors = {(37.44444444444444, 166.11111111111111, 62.111111111111114): 'Y', (197.0, 245.22222222222223, 46.333333333333336): 'G', (185.33333333333334, 251.77777777777777, 158.66666666666666): 'B', (24.555555555555557, 88.0, 72.22222222222223): 'W', (126.11111111111111, 70.55555555555556, 14.666666666666666): 'O', (180.77777777777777, 159.0, 47.333333333333336): 'R'}
 
 
     def readFace(self, positions=[0,1,2,3,4,5,6,7,8]):
@@ -66,26 +59,65 @@ class ColorReader:
             orderedString += colorString[position]
         return orderedString
 
-    def calibrate(self):
-        self.sensorMotor.toSidePosition()
+    def calibrateSensor(self):
         self.colorSensor.calibrate_white()
+
+    def calibrate(self):
+        self.averageColors = {}
+        self.cubeMover.move(['f'])
+        self.averageColors[self.calibrateFace()] = 'G'
+        self.cubeMover.move(['f'])
+        self.averageColors[self.calibrateFace()] = 'Y'
+        self.cubeMover.move(['f'])
+        self.averageColors[self.calibrateFace()] = 'B'
+        self.cubeMover.move(['f'])
+        self.averageColors[self.calibrateFace()] = 'W'
+        self.cubeMover.move(['f', 'R', 'f'])
+        self.averageColors[self.calibrateFace()] = 'R'
+        self.cubeMover.move(['f', 'f'])
+        self.averageColors[self.calibrateFace()] = 'O'
+        self.cubeMover.move(['R', 'f', 'r'])
+        print(self.averageColors)
+
+    def calibrateFace(self):
+        sumR = 0
+        sumG = 0
+        sumB = 0
+        self.sensorMotor.toCenterPosition()
+        r,g,b = self.colorSensor.rgb
+        sumR += r
+        sumB += b
+        sumG += g
+        for i in range(8):
+            if i % 2 == 0:
+                self.sensorMotor.toSidePosition()
+            else:
+                self.sensorMotor.toCornerPosition()
+            r,g,b = self.colorSensor.rgb
+            sumR += r
+            sumB += b
+            sumG += g
+            self.cubeMover.move('H')
+        self.sensorMotor.resetPosition()
+        return (sumR/9, sumG/9, sumB/9)
+        
 
     def readCube(self):
         faces = {}
 
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['B'] = self.readFace([6, 5, 4, 7, 0, 3, 8, 1, 2])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['D'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['F'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F'])
+        self.cubeMover.move(['f'])
         faces['U'] = self.readFace([2, 1, 8, 3, 0, 7, 4, 5, 6])
-        self.cubeMover.move(['F', 'R', 'F'])
+        self.cubeMover.move(['f', 'R', 'f'])
         faces['L'] = self.readFace([4, 3, 2, 5, 0, 1, 6, 7, 8]) # Wrong
-        self.cubeMover.move(['F', 'F'])
+        self.cubeMover.move(['f', 'f'])
         faces['R'] = self.readFace([4, 3, 2, 5, 0, 1, 6, 7, 8]) # Wrong
-        self.cubeMover.move(['R', 'F', 'r'])
+        self.cubeMover.move(['R', 'f', 'r'])
 
         return faces
 

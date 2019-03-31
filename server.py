@@ -9,7 +9,9 @@ class Solver(Resource):
     def get(self, cube):
         solution = CubeSolver.solveCube(cube)
         print(solution)
-        return  translateMoves(solution),  200
+        tSolution = translateMoves(solution)
+        print(tSolution)
+        return  tSolution,  200
 
 
 app = Flask(__name__)

@@ -1,10 +1,11 @@
 def translateMoves(solution):
     moves = ''
+    positions = ['D','F','U','B','L','R']
     for i in range(len(solution)):
         if solution[i] == ' ' or solution[i] == '"' or solution[i] == '\'' or solution[i] == '2':
             continue
         else:
-            moves = read_move(moves, solution[i])
+            moves, positions = read_move(moves, solution[i], positions)
             if i + 1 == len(solution):
                 moves += 't'
                 continue
@@ -19,64 +20,61 @@ def translateMoves(solution):
                 continue
     return moves
 
-def read_move(moves, letter):
-    global positions
+def read_move(moves, letter, positions):
     for i in range(len(positions)):
         if positions[i] == letter:
             if i == 0: 
-                return w1(moves)
+                return w1(moves, positions)
             if i == 1:
-                return w2(moves)
+                return w2(moves, positions)
             if i == 2:
-                return w3(moves)
+                return w3(moves, positions)
             if i == 3:
-                return w4(moves)
+                return w4(moves, positions)
             if i == 4:
-                return w5(moves)
+                return w5(moves, positions)
             if i == 5:
-                return w6(moves)
-    return moves
+                return w6(moves, positions)
+    return moves, positions
 
-def w1(moves):
-    return moves
+def w1(moves, positions):
+    return moves, positions
 
-def w2(moves):
-    global positions
+def w2(moves, positions):
     aux = [positions[1], positions[2], positions[3], positions[0], positions[4], positions[5]]
-    positions = aux.copy()
-    moves += ''
-    return moves
-
-def w3(moves):
-    global positions
-    aux = [positions[2], positions[3], positions[0], positions[1], positions[4], positions[5]]
-    positions = aux.copy()
+    positions = aux
     moves += 'F'
-    return moves
 
-def w4(moves):
-    global positions
+    return moves, positions
+
+
+def w3(moves, positions):
+    aux = [positions[2], positions[3], positions[0], positions[1], positions[4], positions[5]]
+    positions = aux
+    moves += 'FF'
+
+    return moves, positions
+
+
+def w4(moves, positions):
     aux = [positions[3], positions[2], positions[1], positions[0], positions[5], positions[4]]
-    positions = aux.copy()
-    moves += 'S'
-    return moves
+    positions = aux
+    moves += 'SF'
 
-def w5(moves):
-    global positions
+    return moves, positions
+
+
+def w5(moves, positions):
     aux = [positions[4], positions[2], positions[5], positions[0], positions[3], positions[1]]
-    positions = aux.copy()
-    moves += 'r'
-    return moves
+    positions = aux
+    moves += 'rF'
 
-def w6(moves):
-    global positions
+    return moves, positions
+
+
+def w6(moves, positions):
     aux = [positions[5], positions[2], positions[4], positions[0], positions[1], positions[3]]
-    positions = aux.copy()
-    moves += 'R'
-    return moves
+    positions = aux
+    moves += 'RF'
 
-positions = ['D','F','U','B','L','R']
-# solution = "R2 B2 L2 U2 R F U2 D2 F U F2 L2 F2 D B2 U' F2 U' F2"
-# moves = translateMoves(solution)
-
-# print(moves)
+    return moves, positions
